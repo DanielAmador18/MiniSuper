@@ -1,14 +1,32 @@
-﻿namespace Supersito
+﻿using Npgsql;
+
+namespace Supersito
 {
-    class program
+    class Program
     {
         static void Main(string[] args)
         {
             Inventario inventario = new Inventario();
-            Ventas ventas = new Ventas();
+            Ventas venta = new Ventas();
         }
+       
+        //Conexion con la base de datos SQL mediante un conection string y creacion de un metodo que puede ser llamado
+        //para reutilizar codigo.
+        public class ConexionDB
+        {
+        private static string connString = "Host=localhost;Port=5432;Username=postgres;Password=admin123;Database=MiniSuper";
 
-        public void Menu()
+        public static NpgsqlConnection ObtenerConexion()
+        {
+            var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn;
+        }
+    }
+
+
+
+public void Menu()
         {
             while (true)
             {
@@ -26,7 +44,9 @@
                 switch (opc)
                 {
 
-                    case 1: ventas.RegistrarVenta();break;
+                    case 1:
+                        venta.RegistrarVenta();
+                        break;
 
 
                 }
